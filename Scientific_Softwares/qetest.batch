@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --job-name=QE_EXAMPLE
+#SBATCH --partition=test
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=20
+#SBATCH --time=00:30:00
+#SBATCH --mem=0
+#SBATCH --output=qe_test%j.qlog
+
+module load openmpi/4.1.1-gcc-8.4.1
+module load quantum-espresso/7.2-gcc-openblas
+
+nCores=${SLURM_NTASKS}
+mpirun -n $nCores pw.x  < moS2.scf.in &> moS2.scf.out
